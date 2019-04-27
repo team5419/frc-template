@@ -1,4 +1,4 @@
-package frc.team{{cookiecutter.team_number}}.{{cookiecutter.repo_name}}
+package org.team{{cookiecutter.team_number}}.{{cookiecutter.repo_name}}
 
 import edu.wpi.first.wpilibj.TimedRobot
 

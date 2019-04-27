@@ -9,5 +9,5 @@ function cleanup {
 
 trap cleanup EXIT
 
-cookiecutter --no-input . repo_name="$REPO_NAME" team_number=5499
+cookiecutter --no-input . repo_name="$REPO_NAME" team_number=5419
 command "$REPO_NAME/gradlew" -p "$REPO_NAME" test
