@@ -1,9 +1,9 @@
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.3.0"
-    id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
+    id "edu.wpi.first.GradleRIO" version "2019.4.1"
 }
 
-def ROBOT_CLASS = "frc.team{{cookiecutter.team_number}}.{{cookiecutter.repo_name}}.Robot"
+def ROBOT_CLASS = "org.team{{cookiecutter.team_number}}.{{cookiecutter.repo_name}}.Robot"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
@@ -38,7 +38,7 @@ dependencies {
     compile ctre()
 
     // We need to add the Kotlin stdlib in order to use most Kotlin language features.
-    compile "org.jetbrains.kotlin:kotlin-stdlib"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.3.0"
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
@@ -83,7 +83,7 @@ task tox {
 task install_hooks(dependsOn: 'tox')
 
 compileTestJava {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 1.11
+    targetCompatibility = 1.11
     options.compilerArgs += '-parameters'
 }

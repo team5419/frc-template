@@ -1,9 +1,12 @@
 .DS_Store
 .classpath
+*.iml
 .gradle/
 .project
+.idea
 .settings/
 .vscode/
+.tox/
 bin/
 build/
 virtualenv_run/
