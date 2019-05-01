@@ -3,7 +3,7 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2019.4.1"
 }
 
-def ROBOT_CLASS = "org.team{{cookiecutter.team_number}}.{{cookiecutter.repo_name}}.Robot"
+def ROBOT_MAIN_CLASS = "org.team{{cookiecutter.team_number}}.{{cookiecutter.repo_name}}.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
@@ -46,7 +46,7 @@ dependencies {
 // knows where to look for our Robot Class.
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
+    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
 
 test {
