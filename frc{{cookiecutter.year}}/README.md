@@ -1,4 +1,4 @@
-# {{cookiecutter.repo_name}}
+# frc{{cookiecutter.year}}
 ## Getting started
 ### Pre-commit
 First, install the project's [pre-commit](http://pre-commit.com/) hooks (**do this immediately after cloning!**)

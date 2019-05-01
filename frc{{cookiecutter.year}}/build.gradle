@@ -1,9 +1,9 @@
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.3.0"
-    id "edu.wpi.first.GradleRIO" version "2019.4.1"
+    id "edu.wpi.first.GradleRIO" version "2019.3.2"
 }
 
-def ROBOT_CLASS = "org.team{{cookiecutter.team_number}}.{{cookiecutter.repo_name}}.Robot"
+def ROBOT_MAIN_CLASS = "org.team{{cookiecutter.team_number}}.frc{{cookiecutter.year}}.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
@@ -11,7 +11,7 @@ deploy {
     targets {
         target("roborio", edu.wpi.first.gradlerio.frc.RoboRIO) {
             // Team can be overridden by command line, for use with VSCode
-            team = getTeamOrDefault({{cookiecutter.team_number}})
+            team = frc.getTeamNumber()
         }
     }
     artifacts {
@@ -19,7 +19,7 @@ deploy {
         artifact('frcKotlin', edu.wpi.first.gradlerio.frc.FRCJavaArtifact) {
             targets << "roborio"
             // Debug can be overridden by command line, for use with VSCode
-            debug = getDebugOrDefault(false)
+            debug = frc.getDebugOrDefault(false)
         }
     }
 }
@@ -27,6 +27,18 @@ deploy {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven {
+        url "https://maven.team5419.org"
+    }
+    maven {
+        url "http://devsite.ctr-electronics.com/maven/release/"
+    }
+    maven {
+        url "https://repo1.maven.org/maven2/"
+    }
+    maven {
+        url "https://first.wpi.edu/FRC/roborio/maven/release/"
+    }
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends)
@@ -34,8 +46,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.1'
 
-    compile wpilib()
-    compile ctre()
+    compile wpi.deps.wpilib()
+    compile wpi.deps.vendor.java()
+    nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
+    nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
     // We need to add the Kotlin stdlib in order to use most Kotlin language features.
     compile "org.jetbrains.kotlin:kotlin-stdlib:1.3.0"
@@ -46,7 +60,7 @@ dependencies {
 // knows where to look for our Robot Class.
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
+    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
 
 test {
